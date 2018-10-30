@@ -1,16 +1,15 @@
 version: '3'
-
 services:
   web-server:
     restart: always
     build: ./nginx
     container_name: nginx
     volumes:
-      - "pgdata_pshop:/var/lib/postgresql/data"
+      - /opt/infographika_web/static:/static
     ports:
       - "80:80"
     links:
-      - "app:app"
+      - app:app
   app:
     image: registry.gitlab.com/lexonator/infographika_web
     container_name: app_infographika_web
