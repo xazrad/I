@@ -7,5 +7,6 @@ mkdir -p /opt/infographika_web/static \
     && chmod +x /usr/local/bin/docker-compose \
     && docker login registry.gitlab.com -u gitlab+deploy-token-24148 -p BEBV7qg4-mEzjYYHZEc1 \
     && cd /opt/infographika_web \
-    && git clone git@github.com:xazrad/I.git . \
+    && git clone https://github.com/xazrad/I.git \
+    && cd /opt/infographika_web/I \
     && docker-compose up -d --build
