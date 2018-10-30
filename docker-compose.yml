@@ -1,18 +1,16 @@
 version: '3'
 
 services:
-  db:
-    environment:
-      POSTGRES_DB: app_db
-      POSTGRES_USER: app_user
-      POSTGRES_PASSWORD: superPassword
+  web-server:
     restart: always
-    image: postgres:10
-    container_name: db_premium_shop
+    build: ./nginx
+    container_name: nginx
     volumes:
       - "pgdata_pshop:/var/lib/postgresql/data"
-    expose:
-      - "5432"
+    ports:
+      - "80:80"
+    links:
+      - "app:app"
   app:
     image: registry.gitlab.com/lexonator/infographika_web
     container_name: app_infographika_web
@@ -20,14 +18,5 @@ services:
     volumes:
       - /opt/infographika_web/static:/static
       - /opt/infographika_web/db:/sqlite_data
-    depends_on:
-      - db
-      - rabbitmq
-    links:
-      - db:db
-      - rabbitmq:rabbitmq
     ports:
       - "8000:8000"
-volumes:
-  pgdata_pshop:
-  rabbitmq_pshop:
